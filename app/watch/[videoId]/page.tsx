@@ -24,9 +24,9 @@ async function getVideoDetails(videoId: string) {
 export default async function ViewVideoPage({
   params,
 }: {
-  params: { videoId: string };
+  params: Promise<{ videoId: string }>;
 }) {
-  const videoId = params.videoId;
+  const { videoId } = await params;
   const videoDetails = await getVideoDetails(videoId);
 
   return (

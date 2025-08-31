@@ -3,6 +3,7 @@ import VideoCard from "~/components/VideoCard";
 import Link from "next/link";
 import { IconHome, IconMessageCircle } from "@tabler/icons-react";
 import { RegenerateButton } from "~/components/RegenerateButton";
+import { bestMatchVideos } from "~/ai/search";
 
 type YoutubeSearchResult = {
   kind: "youtube#searchResult";
@@ -80,6 +81,14 @@ export default async function WatchPage({ searchParams }: Props) {
     maxResults: 12,
   });
 
+  const bestMatch = await bestMatchVideos(
+    videos?.data?.items?.map((i) => ({
+      title: i?.snippet?.title || "",
+      description: i?.snippet?.description || "",
+      videoId: i?.id?.videoId || "",
+    })) || []
+  );
+
   return (
     <div className="min-h-screen p-8 pb-20 sm:p-20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -108,6 +117,7 @@ export default async function WatchPage({ searchParams }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {videos.data.items
           ?.map((i) => i as YoutubeSearchResult)
+          .filter((i) => bestMatch.some((b) => b.videoId === i.id.videoId))
           .map((item) => (
             <VideoCard key={item.id.videoId} item={item} />
           ))}

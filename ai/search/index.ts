@@ -147,4 +147,60 @@ const addAction: (
   }
 };
 
-export { searchSuggest, addAction };
+export type YoutubeSearchResult = {
+  title: string;
+  description: string;
+  videoId: string;
+};
+
+const bestMatchSystemMessage = (likesVideoTitles: string[]) =>
+  new SystemMessage(
+    `You're the assistant responsible for finding the best match videos for a user's query and preferences.
+  Your task is to analyze the search results and return the top videos that best match the user's intent.
+  The user's liked video titles are: ${likesVideoTitles.join(", ")}
+  `
+  );
+
+const bestMatchResultSchema = z.array(
+  z.object({
+    title: z.string(),
+    description: z.string(),
+    videoId: z.string(),
+  })
+);
+
+const bestMatchResultMessage = (results: YoutubeSearchResult[]) =>
+  new HumanMessage(
+    `Here are the top 3 videos that best match your preferences:\n\n` +
+      results
+        .map(
+          (video, index) =>
+            `${index + 1}. title:${video.title} (ID: ${
+              video.videoId
+            }) description:${video.description}`
+        )
+        .join("\n")
+  );
+
+const bestMatchVideos = async (
+  searchResults: YoutubeSearchResult[]
+): Promise<YoutubeSearchResult[]> => {
+  const { vectorStore } = await createChromaVectorStore();
+  const embedded = await embeddings.embedQuery(
+    searchResults.map((i) => i.title).join(",")
+  );
+  const vectorSearchResult = await vectorStore.similaritySearchVectorWithScore(
+    embedded,
+    10
+  );
+  const results = await llmChat
+    .withStructuredOutput(bestMatchResultSchema)
+    .invoke([
+      bestMatchSystemMessage(vectorSearchResult.map(([i]) => i.pageContent)),
+      bestMatchResultMessage(searchResults),
+    ]);
+
+  return results as YoutubeSearchResult[];
+};
+
+export { searchSuggest, addAction, bestMatchVideos };
