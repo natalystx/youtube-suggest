@@ -27,8 +27,8 @@ YT-Suggest is an intelligent web application that helps users discover YouTube v
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/yt-suggest.git
-   cd yt-suggest
+   git clone https://github.com/natalystx/youtube-suggest.git
+   cd youtube-suggest
    ```
 
 2. Install dependencies:
