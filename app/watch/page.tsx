@@ -77,7 +77,7 @@ export default async function WatchPage({ searchParams }: Props) {
     part: ["id", "snippet"],
     q: query,
     type: ["video"],
-    maxResults: 1,
+    maxResults: 12,
   });
 
   return (
