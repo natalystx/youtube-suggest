@@ -21,11 +21,11 @@ async function getVideoDetails(videoId: string) {
   }
 }
 
-export default async function ViewVideoPage({
-  params,
-}: {
+type PageProps = {
   params: Promise<{ videoId: string }>;
-}) {
+};
+
+export default async function ViewVideoPage({ params }: PageProps) {
   const { videoId } = await params;
   const videoDetails = await getVideoDetails(videoId);
 

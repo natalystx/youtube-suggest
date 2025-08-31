@@ -40,12 +40,12 @@ type YoutubeSearchResult = {
   };
 };
 
-type Props = {
-  searchParams: { q?: string };
+type PageProps = {
+  searchParams: Promise<{ q?: string }>;
 };
 
-export default async function WatchPage({ searchParams }: Props) {
-  const query = searchParams.q || "";
+export default async function WatchPage({ searchParams }: PageProps) {
+  const query = (await searchParams).q || "";
 
   if (!query) {
     return (
