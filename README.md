@@ -6,9 +6,9 @@ YT-Suggest is an intelligent web application that helps users discover YouTube v
 
 Here's a sample of YT-Suggest in action:
 
-<div align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/I8SnC90w5zM" title="YT-Suggest Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+[![YT-Suggest Demo](https://img.youtube.com/vi/I8SnC90w5zM/0.jpg)](https://www.youtube.com/watch?v=I8SnC90w5zM)
+
+> [Watch the demo video on YouTube](https://www.youtube.com/watch?v=I8SnC90w5zM)
 
 ## 🌟 Features
 
