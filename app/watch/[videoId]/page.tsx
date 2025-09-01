@@ -2,6 +2,7 @@ import Link from "next/link";
 import { youtubeClient } from "~/collabs/youtube";
 import { IconArrowLeft } from "@tabler/icons-react";
 import LikeDislikeButtons from "~/components/LikeDislikeButtons";
+import VideoSummaryChat from "~/components/VideoSummaryChat";
 
 // This enables server-side rendering for this page
 export const dynamic = "force-dynamic";
@@ -70,14 +71,24 @@ export default async function ViewVideoPage({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-            <h3 className="font-medium mb-2 text-gray-900 dark:text-white">
-              Description
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line text-sm">
-              {videoDetails?.snippet?.description ||
-                "No description available."}
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+              <h3 className="font-medium mb-2 text-gray-900 dark:text-white">
+                Description
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line text-sm">
+                {videoDetails?.snippet?.description ||
+                  "No description available."}
+              </p>
+            </div>
+
+            {/* Video Summary Chat */}
+            <div>
+              <VideoSummaryChat
+                videoId={videoId}
+                videoTitle={videoDetails?.snippet?.title || "Video Title"}
+              />
+            </div>
           </div>
         </div>
 
