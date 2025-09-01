@@ -2,8 +2,13 @@
 
 YT-Suggest is an intelligent web application that helps users discover YouTube videos based on their interests. Leveraging AI technology, it analyzes user queries, provides personalized search suggestions, and learns from user preferences over time.
 
-![YT-Suggest Screenshot](./preview.png)
-![YT-Suggest Screenshot](./preview-2.png)
+## 🎬 Demo
+
+Here's a sample of YT-Suggest in action:
+
+<div align="center">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/I8SnC90w5zM" title="YT-Suggest Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ## 🌟 Features
 
