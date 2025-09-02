@@ -29,7 +29,6 @@ export default function ChatInput() {
 
       const data = await response.json();
 
-      console.log("AI Response:", data);
       // Redirect to home page with the search term from AI
       if (data.searchTerm) {
         router.push(`/watch/?q=${encodeURIComponent(data.searchTerm)}`);

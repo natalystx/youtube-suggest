@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
-    console.log("cat", category);
 
     if (category) {
       const videos = await youtubeClient.search.list({

@@ -8,6 +8,7 @@ export const env = createEnv({
     CHROMA_TENANT: z.string().min(1),
     CHROMA_DATABASE: z.string().min(1),
     CHROMA_API_KEY: z.string().min(1),
+    GEMINI_MODEL: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
@@ -16,5 +17,6 @@ export const env = createEnv({
     CHROMA_TENANT: process.env.CHROMA_TENANT,
     CHROMA_DATABASE: process.env.CHROMA_DATABASE,
     CHROMA_API_KEY: process.env.CHROMA_API_KEY,
+    GEMINI_MODEL: process.env.GEMINI_MODEL,
   },
 });

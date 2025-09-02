@@ -55,8 +55,6 @@ export default function VideoGrid({
   const [displayTitle, setDisplayTitle] = useState(title);
 
   useEffect(() => {
-    console.log("cat", category);
-    console.log("titleFromCategory", titleFromCategory);
     const fetchVideos = async () => {
       try {
         setIsLoading(true);

@@ -125,10 +125,6 @@ const addAction: (
   videoName: string,
   videoId: string
 ) => Promise<boolean> = async (action, videoName, videoId) => {
-  console.log(
-    `Adding ${action} action for video: ${videoName} (ID: ${videoId})`
-  );
-
   try {
     // Create the document with metadata
     const document = createDocument(videoName, { action, videoId });
@@ -139,7 +135,6 @@ const addAction: (
     // Add the document - this will automatically embed it
     await vectorStore.addDocuments([document], { ids: [document.id!] });
 
-    console.log("Successfully added document to vector store");
     return true;
   } catch (error) {
     console.error("Error adding action to vector store:", error);
@@ -214,7 +209,6 @@ const getRecommendedCategories = async (): Promise<string> => {
 
     // Fetch user's liked content
     const likedContent = await vectorStore.similaritySearch("", 20);
-    console.log("likedContent", likedContent);
 
     // If we have enough liked content, determine categories
     if (likedContent && likedContent.length > 0) {
