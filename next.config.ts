@@ -11,10 +11,15 @@ const nextConfig: NextConfig = {
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.externals = {
-        ...config.externals,
-        "onnxruntime-node": true,
-      };
+      // Properly handle externals - could be an array or object
+      if (Array.isArray(config.externals)) {
+        config.externals.push("onnxruntime-node");
+      } else {
+        config.externals = [
+          ...(config.externals ? [config.externals] : []),
+          "onnxruntime-node",
+        ];
+      }
     }
     return config;
   },
