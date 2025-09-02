@@ -203,4 +203,48 @@ const bestMatchVideos = async (
   return results as YoutubeSearchResult[];
 };
 
-export { searchSuggest, addAction, bestMatchVideos };
+/**
+ * Get recommended categories based on user preferences
+ * Returns a list of categories that might interest the user
+ */
+const getRecommendedCategories = async (): Promise<string> => {
+  try {
+    // Get vector store to access user preferences
+    const { vectorStore } = await createChromaVectorStore();
+
+    // Fetch user's liked content
+    const likedContent = await vectorStore.similaritySearch("", 20);
+    console.log("likedContent", likedContent);
+
+    // If we have enough liked content, determine categories
+    if (likedContent && likedContent.length > 0) {
+      // Extract content titles
+      const contentTitles = likedContent.map((doc) => doc.pageContent);
+
+      const cates = await determineCategory(contentTitles);
+
+      // const suggestTerm = await searchSuggest(contentTitles.join(", "));
+      const result = await llmChat
+        .withStructuredOutput(searchSuggestOutputSchema)
+        .invoke([
+          systemPrompt(
+            cates,
+            contentTitles.map((content) => content)
+          ),
+          new HumanMessage(contentTitles.join(", ")),
+        ]);
+
+      // Return unique categories
+      return result.searchTerms.sort((a, b) => b.matchScore - a.matchScore)[0]
+        .term;
+    }
+
+    // Default categories if no preferences are found
+    return "";
+  } catch (error) {
+    console.error("Error getting recommended categories:", error);
+    return "";
+  }
+};
+
+export { searchSuggest, addAction, bestMatchVideos, getRecommendedCategories };

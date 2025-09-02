@@ -25,32 +25,6 @@ const nextConfig: NextConfig = {
       // Add other large unnecessary files/folders here
     ],
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Properly handle externals for server-side code
-      const externalPackages = [
-        "onnxruntime-node",
-        "@huggingface/transformers",
-      ];
-
-      if (Array.isArray(config.externals)) {
-        config.externals.push(...externalPackages);
-      } else {
-        config.externals = [
-          ...(config.externals ? [config.externals] : []),
-          ...externalPackages,
-        ];
-      }
-    }
-
-    // Enable tree-shaking optimization
-    config.optimization = {
-      ...config.optimization,
-      usedExports: true,
-    };
-
-    return config;
-  },
 };
 
 export default nextConfig;
