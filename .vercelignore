@@ -1,0 +1,18 @@
+# Large dependencies that should be installed by Vercel during build
+
+node_modules/onnxruntime-node
+node_modules/@huggingface/transformers
+node_modules/@img/sharp-libvips-linux-x64
+
+# Cache and build artifacts that shouldn't be uploaded
+
+.next/cache
+**/\*.tsbuildinfo
+**/.DS_Store
+
+# Test and development files not needed in production
+
+**/**tests**
+**/test
+**/tests
+**/_.spec._ \*_/_.test.\*
